@@ -56,9 +56,16 @@ public class App {
             String line;
             int i = 1;
             while ((line = br.readLine()) != null) {
-                System.out.println(line);
-                wordleDatabaseConnection.addValidWord(i, line);
-                i++;
+                if (line.matches("^[a-z]{4}$")) {
+                    wordleDatabaseConnection.addValidWord(i, line);
+                    String msg = String.format("Added %s to db", line);
+                    logger.log(Level.INFO, msg);
+                    i++;
+                }
+                else {
+                    String msg = String.format("Attempt to import %s to db.", line);
+                    logger.log(Level.SEVERE, msg);
+                }
             }
 
         } catch (IOException e) {
